@@ -43,7 +43,7 @@ Gemini にはクロール済みページの抜粋だけを渡します（モデ�
 Python 3.10 以上が必要です（Python 3.12 で動作を確認しました）。
 
 ```powershell
-git clone https://github.com/<owner>/salesnow-web-scraping.git
+git clone https://github.com/huyminhyt/salesnow-web-scraping.git
 cd salesnow-web-scraping
 py -3.12 -m venv .venv
 .venv\Scripts\activate          # macOS/Linux: source .venv/bin/activate
