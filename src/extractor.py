@@ -1,5 +1,5 @@
-"""Rule-based field extraction from company-profile pages, with per-field cleaning and
-evidence-based verification."""
+"""Rule-based field extraction (cross-check and fallback for the LLM), per-field cleaning,
+evidence-based verification, and the merge of LLM and rule-based results."""
 import re
 from dataclasses import asdict, dataclass
 
@@ -29,6 +29,9 @@ class FieldResult:
     source_url: str = ""
     evidence: str = ""
     verified: bool = False
+    method: str = ""  # "llm" | "rule_based" | "" (not found)
+    llm_value: str = ""
+    rule_value: str = ""
 
 
 def clean_address(raw: str) -> tuple[str, str]:
@@ -83,7 +86,14 @@ FORMATS = {
 def verify(field: str, value: str, evidence: str, page_text: str) -> bool:
     """The evidence must appear on the cited page, the value must be traceable to the
     evidence, and the value must have the expected shape."""
-    if not value or not evidence or compact(evidence) not in compact(page_text):
+    # Each evidence line must be on the page; lines are checked separately because the model
+    # may quote non-adjacent lines. Colons are dropped: excerpts render cells as "label: value".
+    page = compact(page_text).replace(":", "")
+    lines = [compact(line).replace(":", "") for line in evidence.splitlines() if line.strip()]
+    if not value or not lines or any(line not in page for line in lines):
+        return False
+    # A timeline's "7月" occurs many times, so year/month/設立 must be quoted as one contiguous run.
+    if field == "established" and "".join(lines) not in page:
         return False
     if not FORMATS[field].search(value):
         return False
@@ -130,6 +140,27 @@ def extract(pages: list[tuple[str, object]], page_texts: dict[str, str]) -> tupl
     for field, r in out.items():
         r.verified = verify(field, r.value, r.evidence, page_texts.get(r.source_url, ""))
     return out, postal
+
+
+def merge(llm_data: dict | None, rules: dict[str, FieldResult], page_texts: dict[str, str]) -> dict[str, FieldResult]:
+    """The LLM value is used when it passes verification; otherwise the verified
+    rule-based value is used, so an unsupported LLM answer never reaches the output."""
+    merged = {}
+    for f in FIELDS:
+        rule = rules[f]
+        llm = FieldResult()
+        if llm_data:
+            d = llm_data[f]
+            llm = FieldResult(d.get("value", "").strip(), d.get("source_url", "").strip(), d.get("evidence", "").strip())
+            llm.verified = verify(f, llm.value, llm.evidence, page_texts.get(llm.source_url, ""))
+        if llm.verified or (llm.value and not rule.verified):
+            chosen, method = llm, "llm"
+        elif rule.value:
+            chosen, method = rule, "rule_based"
+        else:
+            chosen, method = FieldResult(), ""
+        merged[f] = FieldResult(chosen.value, chosen.source_url, chosen.evidence, chosen.verified, method, llm.value, rule.value)
+    return merged
 
 
 def as_dict(fields: dict[str, FieldResult]) -> dict:

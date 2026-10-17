@@ -1,0 +1,34 @@
+model: gemini-2.5-flash
+usage: prompt_tokens=463 output_tokens=225
+
+===== SYSTEM =====
+あなたは日本企業の公式サイトから企業情報を抽出するアシスタントです。
+与えられたページ抜粋（URL付き）だけを根拠に、次の4項目を抽出してください。
+
+- head_office_address: 本社（本店）所在地。郵便番号・電話番号・地図やアクセス案内の文言は除き、住所のみ（ビル名・階は含める）。
+- representative: 代表者の氏名のみ（役職は含めない）。代表取締役が複数いる場合は社長を優先し、他の代表者は notes に記載。
+- capital: 資本金。ページの表記どおり（例: 30,685百万円）。「(2026年3月31日現在)」等の注記は除く。
+- established: 設立年月を「YYYY年M月」形式で（和暦は西暦に換算）。会社概要に年しか無い場合は沿革の該当年の「設立」の記載から月を取る。月の根拠が無ければ「YYYY年」とし、推測で補わない。
+
+ルール:
+- 抜粋に根拠が無い項目は value / source_url / evidence をすべて空文字にする。一般知識による補完は禁止。
+- evidence には根拠となる抜粋の行を原文のまま（改変・要約せず）コピーする。複数行にまたがる場合は改行で区切る。
+- source_url は evidence を含むページの URL をそのまま記載する。
+- 「設立」と「創業」「創立」が両方ある場合は「設立」を採用する。
+
+===== USER =====
+企業名: ミライト・ワン
+
+### URL: https://www.mirait-one.com/corporate/profile/
+設立: 2010年10月1日
+本社: 〒105-0001 東京都港区虎ノ門2-2-3
+代表: 代表取締役社長 CEO 菅原 英宗
+資本金: 70億円
+1417
+電話
+03-6807-3111(代表)
+URL
+https://www.mirait-one.com/
+
+===== RESPONSE =====
+{"head_office_address": {"value": "東京都港区虎ノ門2-2-3", "source_url": "https://www.mirait-one.com/corporate/profile/", "evidence": "本社: \n〒105-0001 東京都港区虎ノ門2-2-3"}, "representative": {"value": "菅原 英宗", "source_url": "https://www.mirait-one.com/corporate/profile/", "evidence": "代表: 代表取締役社長 CEO 菅原 英宗"}, "capital": {"value": "70億円", "source_url": "https://www.mirait-one.com/corporate/profile/", "evidence": "資本金: 70億円"}, "established": {"value": "2010年10月", "source_url": "https://www.mirait-one.com/corporate/profile/", "evidence": "設立: 2010年10月1日"}, "notes": ""}

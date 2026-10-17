@@ -1,0 +1,61 @@
+model: gemini-2.5-flash
+usage: prompt_tokens=616 output_tokens=408
+
+===== SYSTEM =====
+あなたは日本企業の公式サイトから企業情報を抽出するアシスタントです。
+与えられたページ抜粋（URL付き）だけを根拠に、次の4項目を抽出してください。
+
+- head_office_address: 本社（本店）所在地。郵便番号・電話番号・地図やアクセス案内の文言は除き、住所のみ（ビル名・階は含める）。
+- representative: 代表者の氏名のみ（役職は含めない）。代表取締役が複数いる場合は社長を優先し、他の代表者は notes に記載。
+- capital: 資本金。ページの表記どおり（例: 30,685百万円）。「(2026年3月31日現在)」等の注記は除く。
+- established: 設立年月を「YYYY年M月」形式で（和暦は西暦に換算）。会社概要に年しか無い場合は沿革の該当年の「設立」の記載から月を取る。月の根拠が無ければ「YYYY年」とし、推測で補わない。
+
+ルール:
+- 抜粋に根拠が無い項目は value / source_url / evidence をすべて空文字にする。一般知識による補完は禁止。
+- evidence には根拠となる抜粋の行を原文のまま（改変・要約せず）コピーする。複数行にまたがる場合は改行で区切る。
+- source_url は evidence を含むページの URL をそのまま記載する。
+- 「設立」と「創業」「創立」が両方ある場合は「設立」を採用する。
+
+===== USER =====
+企業名: サカタのタネ
+
+### URL: https://corporate.sakataseed.co.jp/company/profile.html
+代表者: 代表取締役会長 坂田 宏 代表取締役社長 加々美 勉
+本社所在地: 〒224-0041 神奈川県横浜市都筑区仲町台二丁目7番1号 アクセス情報 電車の場合 横浜市営地下鉄ブルーライン「仲町台」駅から徒歩約5分 お車の場合 第三京浜「都筑IC」より約1.5kmまたは「港北IC」より約2.2km 東名高速道路「横浜青葉IC」より約6.5km 首都高速道路「横浜港北IC」より約2.3km
+設立: 1942年12月
+資本金: 135億円
+会社概要
+サカタのタネ本社
+本社敷地内にあるグリーンプラザ(展示温室)
+社名
+株式会社 サカタのタネ(英語表記 SAKATA SEED CORPORATION)
+電話番号
+045-945-8800(代表)
+創業
+1913年7月(坂田農園)
+東証プライム市場
+
+===== RESPONSE =====
+{
+  "head_office_address": {
+    "value": "神奈川県横浜市都筑区仲町台二丁目7番1号",
+    "source_url": "https://corporate.sakataseed.co.jp/company/profile.html",
+    "evidence": "本社所在地: 〒224-0041 神奈川県横浜市都筑区仲町台二丁目7番1号 アクセス情報 電車の場合 横浜市営地下鉄ブルーライン「仲町台」駅から徒歩約5分 お車の場合 第三京浜「都筑IC」より約1.5kmまたは「港北IC」より約2.2km 東名高速道路「横浜青葉IC」より約6.5km 首都高速道路「横浜港北IC」より約2.3km"
+  },
+  "representative": {
+    "value": "加々美 勉",
+    "source_url": "https://corporate.sakataseed.co.jp/company/profile.html",
+    "evidence": "代表者: 代表取締役会長 坂田 宏 代表取締役社長 加々美 勉"
+  },
+  "capital": {
+    "value": "135億円",
+    "source_url": "https://corporate.sakataseed.co.jp/company/profile.html",
+    "evidence": "資本金: 135億円"
+  },
+  "established": {
+    "value": "1942年12月",
+    "source_url": "https://corporate.sakataseed.co.jp/company/profile.html",
+    "evidence": "設立: 1942年12月"
+  },
+  "notes": "代表取締役会長 坂田 宏"
+}

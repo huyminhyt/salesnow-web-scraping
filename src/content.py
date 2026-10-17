@@ -85,6 +85,20 @@ def page_text(soup: BeautifulSoup) -> str:
     return "\n".join(line for line in lines if line)
 
 
+def relevant_excerpt(soup: BeautifulSoup, max_chars: int = 4000) -> str:
+    """What the LLM gets for one page: label/value pairs, then lines mentioning a target
+    label plus the line after it. Keeps prompts small and free of nav/footer noise."""
+    pairs = [f"{k}: {v}" for k, v in label_value_pairs(soup) if _ANY_LABEL.search(k)]
+    lines = page_text(soup).splitlines()
+    picked = []
+    for i, line in enumerate(lines):
+        if len(line) < 200 and (_ANY_LABEL.search(line) or re.fullmatch(r"\d{1,2}\s*月", line)):
+            picked.extend(lines[max(i - 1, 0) : i + 2])
+    covered = compact("".join(pairs)).replace(":", "")
+    picked = [line for line in picked if compact(line) not in covered]  # already shown as a pair
+    return "\n".join(dict.fromkeys(pairs + picked))[:max_chars]
+
+
 def field_hits(soup: BeautifulSoup) -> int:
     """How many of the four target fields appear as a table/dl label on the page.
     Labels (not free text) avoid counting nav menus that merely say 会社概要."""

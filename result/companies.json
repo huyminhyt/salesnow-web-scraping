@@ -4,6 +4,8 @@
     "url": "https://www.nissui.co.jp/",
     "status": "ok",
     "postal_code": "",
+    "llm_model": "gemini-2.5-flash",
+    "llm_status": "ok",
     "crawled_pages": [
       "https://www.nissui.co.jp/",
       "https://www.nissui.co.jp/corporate/index.html",
@@ -12,39 +14,58 @@
       "https://www.nissui.co.jp/corporate/history/02.html"
     ],
     "errors": [],
+    "llm_input_pages": [
+      "https://www.nissui.co.jp/corporate/index.html",
+      "https://www.nissui.co.jp/corporate/history/02.html"
+    ],
+    "llm_notes": "",
     "head_office_address": {
       "value": "東京都港区西新橋1-3-1 西新橋スクエア",
       "source_url": "https://www.nissui.co.jp/corporate/index.html",
-      "evidence": "本社所在地 東京都港区西新橋1-3-1 西新橋スクエア",
-      "verified": true
+      "evidence": "本社所在地: 東京都港区西新橋1-3-1 西新橋スクエア",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "東京都港区西新橋1-3-1 西新橋スクエア",
+      "rule_value": "東京都港区西新橋1-3-1 西新橋スクエア"
     },
     "representative": {
       "value": "田中輝",
       "source_url": "https://www.nissui.co.jp/corporate/index.html",
-      "evidence": "代表者 代表取締役 社長執行役員 田中輝",
-      "verified": true
+      "evidence": "代表者: 代表取締役 社長執行役員 田中輝",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "田中輝",
+      "rule_value": "田中輝"
     },
     "capital": {
       "value": "30,685百万円",
       "source_url": "https://www.nissui.co.jp/corporate/index.html",
-      "evidence": "資本金 30,685百万円",
-      "verified": true
+      "evidence": "資本金: 30,685百万円",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "30,685百万円",
+      "rule_value": "30,685百万円"
     },
     "established": {
       "value": "1943年3月",
       "source_url": "https://www.nissui.co.jp/corporate/history/02.html",
-      "evidence": "1943年3月 日本海洋漁業統制株式会社設立",
-      "verified": true
+      "evidence": "1943年3月\n日本海洋漁業統制株式会社設立",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "1943年3月",
+      "rule_value": "1943年3月"
     },
     "missing_fields": [],
     "unverified_fields": [],
-    "extracted_at": "2026-10-17T06:38:12+00:00"
+    "extracted_at": "2026-10-17T07:37:03+00:00"
   },
   {
     "company_name": "Ｕｍｉｏｓ",
     "url": "https://www.umios.com/",
     "status": "ok",
     "postal_code": "108-8620",
+    "llm_model": "gemini-2.5-flash",
+    "llm_status": "ok",
     "crawled_pages": [
       "https://www.umios.com/jp/",
       "https://www.umios.com/jp/corporate/outline/data/history/",
@@ -55,231 +76,341 @@
       "https://www.umios.com/jp/corporate/outline/data/"
     ],
     "errors": [],
+    "llm_input_pages": [
+      "https://www.umios.com/jp/corporate/outline/data/",
+      "https://www.umios.com/jp/corporate/outline/data/history/"
+    ],
+    "llm_notes": "",
     "head_office_address": {
       "value": "東京都港区高輪二丁目21番2号 THE LINKPILLAR 1 SOUTH",
       "source_url": "https://www.umios.com/jp/corporate/outline/data/",
-      "evidence": "所在地 〒108-8620 東京都港区高輪二丁目21番2号 THE LINKPILLAR 1 SOUTH",
-      "verified": true
+      "evidence": "所在地: 〒108-8620 東京都港区高輪二丁目21番2号 THE LINKPILLAR 1 SOUTH",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "東京都港区高輪二丁目21番2号 THE LINKPILLAR 1 SOUTH",
+      "rule_value": "東京都港区高輪二丁目21番2号 THE LINKPILLAR 1 SOUTH"
     },
     "representative": {
       "value": "安田 大助",
       "source_url": "https://www.umios.com/jp/corporate/outline/data/",
-      "evidence": "代表者 代表取締役社長執行役員 最高執行責任者 安田 大助",
-      "verified": true
+      "evidence": "代表者: 代表取締役社長執行役員 最高執行責任者 安田 大助",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "安田 大助",
+      "rule_value": "安田 大助"
     },
     "capital": {
       "value": "200億円",
       "source_url": "https://www.umios.com/jp/corporate/outline/data/",
-      "evidence": "資本金 200億円",
-      "verified": true
+      "evidence": "資本金: 200億円",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "200億円",
+      "rule_value": "200億円"
     },
     "established": {
       "value": "1943年3月",
       "source_url": "https://www.umios.com/jp/corporate/outline/data/",
-      "evidence": "設立年月日 1943年3月31日",
-      "verified": true
+      "evidence": "設立年月日: 1943年3月31日",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "1943年3月",
+      "rule_value": "1943年3月"
     },
     "missing_fields": [],
     "unverified_fields": [],
-    "extracted_at": "2026-10-17T06:38:20+00:00"
+    "extracted_at": "2026-10-17T07:37:23+00:00"
   },
   {
     "company_name": "ユキグニファクトリー",
     "url": "https://www.yukiguni-factory.co.jp/",
     "status": "ok",
     "postal_code": "949-6695",
+    "llm_model": "gemini-2.5-flash",
+    "llm_status": "ok",
     "crawled_pages": [
       "https://www.yukiguni-factory.co.jp/",
       "https://www.yukiguni-factory.co.jp/company/gaiyou/"
     ],
     "errors": [],
+    "llm_input_pages": [
+      "https://www.yukiguni-factory.co.jp/company/gaiyou/"
+    ],
+    "llm_notes": "",
     "head_office_address": {
       "value": "新潟県南魚沼市余川89番地",
       "source_url": "https://www.yukiguni-factory.co.jp/company/gaiyou/",
-      "evidence": "本社所在地 新潟本社 〒949-6695 新潟県南魚沼市余川89番地 TEL:025-778-0111(代表)",
-      "verified": true
+      "evidence": "本社所在地: 新潟本社 〒949-6695 新潟県南魚沼市余川89番地 TEL:025-778-0111(代表)",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "新潟県南魚沼市余川89番地",
+      "rule_value": "新潟県南魚沼市余川89番地"
     },
     "representative": {
       "value": "湯澤 尚史",
       "source_url": "https://www.yukiguni-factory.co.jp/company/gaiyou/",
-      "evidence": "代表者名 代表取締役社長 湯澤 尚史",
-      "verified": true
+      "evidence": "代表者名: 代表取締役社長 湯澤 尚史",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "湯澤 尚史",
+      "rule_value": "湯澤 尚史"
     },
     "capital": {
       "value": "100百万円",
       "source_url": "https://www.yukiguni-factory.co.jp/company/gaiyou/",
-      "evidence": "資本金 100百万円",
-      "verified": true
+      "evidence": "資本金: 100百万円",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "100百万円",
+      "rule_value": "100百万円"
     },
     "established": {
       "value": "1983年7月",
       "source_url": "https://www.yukiguni-factory.co.jp/company/gaiyou/",
-      "evidence": "設立年月 1983年7月",
-      "verified": true
+      "evidence": "設立年月: 1983年7月",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "1983年7月",
+      "rule_value": "1983年7月"
     },
     "missing_fields": [],
     "unverified_fields": [],
-    "extracted_at": "2026-10-17T06:38:23+00:00"
+    "extracted_at": "2026-10-17T07:37:31+00:00"
   },
   {
     "company_name": "サカタのタネ",
     "url": "https://www.sakataseed.co.jp/",
     "status": "ok",
     "postal_code": "224-0041",
+    "llm_model": "gemini-2.5-flash",
+    "llm_status": "ok",
     "crawled_pages": [
       "https://www.sakataseed.co.jp/",
       "https://corporate.sakataseed.co.jp/company/",
       "https://corporate.sakataseed.co.jp/company/profile.html"
     ],
     "errors": [],
+    "llm_input_pages": [
+      "https://corporate.sakataseed.co.jp/company/profile.html"
+    ],
+    "llm_notes": "代表取締役会長 坂田 宏",
     "head_office_address": {
       "value": "神奈川県横浜市都筑区仲町台二丁目7番1号",
       "source_url": "https://corporate.sakataseed.co.jp/company/profile.html",
-      "evidence": "本社所在地 〒224-0041 神奈川県横浜市都筑区仲町台二丁目7番1号 アクセス情報 電車の場合 横浜市営地下鉄ブルーライン「仲町台」駅から徒歩約5分 お車の場合 第三京浜「都筑IC」より約1.5kmまたは「港北IC」より約2.2km 東名高速道路「横浜青葉IC」より約6.5km 首都高速道路「横浜港北IC」より約2.3km",
-      "verified": true
+      "evidence": "本社所在地: 〒224-0041 神奈川県横浜市都筑区仲町台二丁目7番1号 アクセス情報 電車の場合 横浜市営地下鉄ブルーライン「仲町台」駅から徒歩約5分 お車の場合 第三京浜「都筑IC」より約1.5kmまたは「港北IC」より約2.2km 東名高速道路「横浜青葉IC」より約6.5km 首都高速道路「横浜港北IC」より約2.3km",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "神奈川県横浜市都筑区仲町台二丁目7番1号",
+      "rule_value": "神奈川県横浜市都筑区仲町台二丁目7番1号"
     },
     "representative": {
       "value": "加々美 勉",
       "source_url": "https://corporate.sakataseed.co.jp/company/profile.html",
-      "evidence": "代表者 代表取締役会長 坂田 宏 代表取締役社長 加々美 勉",
-      "verified": true
+      "evidence": "代表者: 代表取締役会長 坂田 宏 代表取締役社長 加々美 勉",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "加々美 勉",
+      "rule_value": "加々美 勉"
     },
     "capital": {
       "value": "135億円",
       "source_url": "https://corporate.sakataseed.co.jp/company/profile.html",
-      "evidence": "資本金 135億円",
-      "verified": true
+      "evidence": "資本金: 135億円",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "135億円",
+      "rule_value": "135億円"
     },
     "established": {
       "value": "1942年12月",
       "source_url": "https://corporate.sakataseed.co.jp/company/profile.html",
-      "evidence": "設立 1942年12月",
-      "verified": true
+      "evidence": "設立: 1942年12月",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "1942年12月",
+      "rule_value": "1942年12月"
     },
     "missing_fields": [],
     "unverified_fields": [],
-    "extracted_at": "2026-10-17T06:38:27+00:00"
+    "extracted_at": "2026-10-17T07:37:53+00:00"
   },
   {
     "company_name": "ホクト",
     "url": "https://www.hokto-kinoko.co.jp/",
     "status": "ok",
     "postal_code": "381-8533",
+    "llm_model": "gemini-2.5-flash",
+    "llm_status": "ok",
     "crawled_pages": [
       "https://www.hokto-kinoko.co.jp/",
       "https://www.hokto-kinoko.co.jp/corporate/kigyou/gaiyou/",
       "https://www.hokto-kinoko.co.jp/corporate/kigyou/rekishi/"
     ],
     "errors": [],
+    "llm_input_pages": [
+      "https://www.hokto-kinoko.co.jp/corporate/kigyou/gaiyou/",
+      "https://www.hokto-kinoko.co.jp/corporate/kigyou/rekishi/"
+    ],
+    "llm_notes": "",
     "head_office_address": {
       "value": "長野県長野市南堀138-1",
       "source_url": "https://www.hokto-kinoko.co.jp/corporate/kigyou/gaiyou/",
-      "evidence": "所在地 〒 381-8533 長野県長野市南堀138-1 MAP",
-      "verified": true
+      "evidence": "所在地: 〒 381-8533 長野県長野市南堀138-1 MAP",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "長野県長野市南堀138-1",
+      "rule_value": "長野県長野市南堀138-1"
     },
     "representative": {
       "value": "水野雅義",
       "source_url": "https://www.hokto-kinoko.co.jp/corporate/kigyou/gaiyou/",
-      "evidence": "代表者 代表取締役社長 水野雅義",
-      "verified": true
+      "evidence": "代表者: 代表取締役社長 水野雅義",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "水野雅義",
+      "rule_value": "水野雅義"
     },
     "capital": {
       "value": "55億円",
       "source_url": "https://www.hokto-kinoko.co.jp/corporate/kigyou/gaiyou/",
-      "evidence": "資本金 55億円",
-      "verified": true
+      "evidence": "資本金: 55億円",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "55億円",
+      "rule_value": "55億円"
     },
     "established": {
       "value": "1964年7月",
       "source_url": "https://www.hokto-kinoko.co.jp/corporate/kigyou/rekishi/",
-      "evidence": "昭和39年 7月 長野県長野市大字箱清水においてデラップス商事株式会社を設立、一般包装資材の販売を開始。資本金50万円",
-      "verified": true
+      "evidence": "昭和39年\n7月\n長野県長野市大字箱清水においてデラップス商事株式会社を設立、一般包装資材の販売を開始。資本金50万円",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "1964年7月",
+      "rule_value": "1964年7月"
     },
     "missing_fields": [],
     "unverified_fields": [],
-    "extracted_at": "2026-10-17T06:38:31+00:00"
+    "extracted_at": "2026-10-17T07:38:06+00:00"
   },
   {
     "company_name": "ショーボンドホールディングス",
     "url": "https://www.sho-bondhd.jp/",
     "status": "ok",
     "postal_code": "103-0015",
+    "llm_model": "gemini-2.5-flash",
+    "llm_status": "ok",
     "crawled_pages": [
       "https://www.sho-bondhd.jp/",
       "https://www.sho-bondhd.jp/company/profile/"
     ],
     "errors": [],
+    "llm_input_pages": [
+      "https://www.sho-bondhd.jp/company/profile/"
+    ],
+    "llm_notes": "",
     "head_office_address": {
       "value": "東京都中央区日本橋箱崎町7番8号",
       "source_url": "https://www.sho-bondhd.jp/company/profile/",
-      "evidence": "本社 〒103-0015 東京都中央区日本橋箱崎町7番8号 TEL.03-6892-7101(代)",
-      "verified": true
+      "evidence": "本社: \n〒103-0015 東京都中央区日本橋箱崎町7番8号 TEL.03-6892-7101(代)",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "東京都中央区日本橋箱崎町7番8号",
+      "rule_value": "東京都中央区日本橋箱崎町7番8号"
     },
     "representative": {
       "value": "岸本 達也",
       "source_url": "https://www.sho-bondhd.jp/company/profile/",
-      "evidence": "代表取締役社長 岸本 達也",
-      "verified": true
+      "evidence": "代表取締役社長: 岸本 達也",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "岸本 達也",
+      "rule_value": "岸本 達也"
     },
     "capital": {
       "value": "50億円",
       "source_url": "https://www.sho-bondhd.jp/company/profile/",
-      "evidence": "資本金 50億円",
-      "verified": true
+      "evidence": "資本金: 50億円",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "50億円",
+      "rule_value": "50億円"
     },
     "established": {
       "value": "2008年1月",
       "source_url": "https://www.sho-bondhd.jp/company/profile/",
-      "evidence": "設立 2008年1月4日",
-      "verified": true
+      "evidence": "設立: 2008年1月4日",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "2008年1月",
+      "rule_value": "2008年1月"
     },
     "missing_fields": [],
     "unverified_fields": [],
-    "extracted_at": "2026-10-17T06:38:34+00:00"
+    "extracted_at": "2026-10-17T07:38:14+00:00"
   },
   {
     "company_name": "ミライト・ワン",
     "url": "https://www.mirait-one.com/",
     "status": "ok",
     "postal_code": "105-0001",
+    "llm_model": "gemini-2.5-flash",
+    "llm_status": "ok",
     "crawled_pages": [
       "https://www.mirait-one.com/",
       "https://www.mirait-one.com/corporate/profile/"
     ],
     "errors": [],
+    "llm_input_pages": [
+      "https://www.mirait-one.com/corporate/profile/"
+    ],
+    "llm_notes": "",
     "head_office_address": {
       "value": "東京都港区虎ノ門2-2-3",
       "source_url": "https://www.mirait-one.com/corporate/profile/",
-      "evidence": "本社 〒105-0001 東京都港区虎ノ門2-2-3",
-      "verified": true
+      "evidence": "本社: \n〒105-0001 東京都港区虎ノ門2-2-3",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "東京都港区虎ノ門2-2-3",
+      "rule_value": "東京都港区虎ノ門2-2-3"
     },
     "representative": {
       "value": "菅原 英宗",
       "source_url": "https://www.mirait-one.com/corporate/profile/",
-      "evidence": "代表 代表取締役社長 CEO 菅原 英宗",
-      "verified": true
+      "evidence": "代表: 代表取締役社長 CEO 菅原 英宗",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "菅原 英宗",
+      "rule_value": "菅原 英宗"
     },
     "capital": {
       "value": "70億円",
       "source_url": "https://www.mirait-one.com/corporate/profile/",
-      "evidence": "資本金 70億円",
-      "verified": true
+      "evidence": "資本金: 70億円",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "70億円",
+      "rule_value": "70億円"
     },
     "established": {
       "value": "2010年10月",
       "source_url": "https://www.mirait-one.com/corporate/profile/",
-      "evidence": "設立 2010年10月1日",
-      "verified": true
+      "evidence": "設立: 2010年10月1日",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "2010年10月",
+      "rule_value": "2010年10月"
     },
     "missing_fields": [],
     "unverified_fields": [],
-    "extracted_at": "2026-10-17T06:38:37+00:00"
+    "extracted_at": "2026-10-17T07:38:21+00:00"
   },
   {
     "company_name": "タマホーム",
     "url": "https://www.tamahome.jp/",
     "status": "ok",
     "postal_code": "108-0074",
+    "llm_model": "gemini-2.5-flash",
+    "llm_status": "ok",
     "crawled_pages": [
       "https://www.tamahome.jp/",
       "https://www.tamahome.jp/company/profile/outline/",
@@ -287,39 +418,57 @@
       "https://www.tamahome.jp/company/profile/"
     ],
     "errors": [],
+    "llm_input_pages": [
+      "https://www.tamahome.jp/company/profile/"
+    ],
+    "llm_notes": "代表取締役会長 玉木 康裕",
     "head_office_address": {
       "value": "東京都港区高輪3丁目22番9号 タマホーム本社ビル",
       "source_url": "https://www.tamahome.jp/company/profile/",
-      "evidence": "本社 〒108-0074 東京都港区高輪3丁目22番9号 タマホーム本社ビル TEL 03-6408-1200 / FAX 03-6408-1210",
-      "verified": true
+      "evidence": "本社: 〒108-0074 東京都港区高輪3丁目22番9号 タマホーム本社ビル TEL 03-6408-1200 / FAX 03-6408-1210",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "東京都港区高輪3丁目22番9号 タマホーム本社ビル",
+      "rule_value": "東京都港区高輪3丁目22番9号 タマホーム本社ビル"
     },
     "representative": {
       "value": "玉木 伸弥",
       "source_url": "https://www.tamahome.jp/company/profile/",
-      "evidence": "代表者 代表取締役会長 玉木 康裕 代表取締役社長 玉木 伸弥 役員紹介",
-      "verified": true
+      "evidence": "代表者: 代表取締役会長 玉木 康裕 代表取締役社長 玉木 伸弥 役員紹介",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "玉木 伸弥",
+      "rule_value": "玉木 伸弥"
     },
     "capital": {
       "value": "43億1,014万円",
       "source_url": "https://www.tamahome.jp/company/profile/",
-      "evidence": "資本金 43億1,014万円 (2026年5月31日 現在)",
-      "verified": true
+      "evidence": "資本金: 43億1,014万円 (2026年5月31日 現在)",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "43億1,014万円",
+      "rule_value": "43億1,014万円"
     },
     "established": {
       "value": "1998年6月",
       "source_url": "https://www.tamahome.jp/company/profile/",
-      "evidence": "設立 1998年6月3日",
-      "verified": true
+      "evidence": "設立: 1998年6月3日",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "1998年6月",
+      "rule_value": "1998年6月"
     },
     "missing_fields": [],
     "unverified_fields": [],
-    "extracted_at": "2026-10-17T06:38:42+00:00"
+    "extracted_at": "2026-10-17T07:38:32+00:00"
   },
   {
     "company_name": "極洋",
     "url": "https://www.kyokuyo.co.jp/",
     "status": "ok",
     "postal_code": "",
+    "llm_model": "gemini-2.5-flash",
+    "llm_status": "ok",
     "crawled_pages": [
       "https://www.kyokuyo.co.jp/",
       "https://www.kyokuyo.co.jp/company/index.html",
@@ -331,70 +480,105 @@
       "https://www.kyokuyo.co.jp/company/data/profile/index.html"
     ],
     "errors": [],
+    "llm_input_pages": [
+      "https://www.kyokuyo.co.jp/company/data/profile/index.html",
+      "https://www.kyokuyo.co.jp/company/point/history/index.html"
+    ],
+    "llm_notes": "取締役副社長: 近藤 茂",
     "head_office_address": {
       "value": "東京都港区赤坂三丁目3番5号",
       "source_url": "https://www.kyokuyo.co.jp/company/data/profile/index.html",
-      "evidence": "本社所在地 東京都港区赤坂三丁目3番5号 本社地図",
-      "verified": true
+      "evidence": "本社所在地: 東京都港区赤坂三丁目3番5号 本社地図",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "東京都港区赤坂三丁目3番5号",
+      "rule_value": "東京都港区赤坂三丁目3番5号"
     },
     "representative": {
       "value": "井上 誠",
       "source_url": "https://www.kyokuyo.co.jp/company/data/profile/index.html",
-      "evidence": "代表者 代表取締役社長 井上 誠",
-      "verified": true
+      "evidence": "代表者: 代表取締役社長 井上 誠",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "井上 誠",
+      "rule_value": "井上 誠"
     },
     "capital": {
       "value": "75億2700万円",
       "source_url": "https://www.kyokuyo.co.jp/company/data/profile/index.html",
-      "evidence": "資本金 75億2700万円",
-      "verified": true
+      "evidence": "資本金: 75億2700万円",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "75億2700万円",
+      "rule_value": "75億2700万円"
     },
     "established": {
       "value": "1937年9月",
       "source_url": "https://www.kyokuyo.co.jp/company/data/profile/index.html",
-      "evidence": "設立 1937年9月3日",
-      "verified": true
+      "evidence": "設立: 1937年9月3日",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "1937年9月",
+      "rule_value": "1937年9月"
     },
     "missing_fields": [],
     "unverified_fields": [],
-    "extracted_at": "2026-10-17T06:38:48+00:00"
+    "extracted_at": "2026-10-17T07:38:50+00:00"
   },
   {
     "company_name": "日本アクア",
     "url": "https://www.n-aqua.jp/",
     "status": "ok",
     "postal_code": "108-0075",
+    "llm_model": "gemini-2.5-flash",
+    "llm_status": "ok",
     "crawled_pages": [
       "https://www.n-aqua.jp/",
       "https://www.n-aqua.jp/company/info.html"
     ],
     "errors": [],
+    "llm_input_pages": [
+      "https://www.n-aqua.jp/company/info.html"
+    ],
+    "llm_notes": "他の代表者: 専務取締役 村上 友香",
     "head_office_address": {
       "value": "東京都港区港南2-16-2 太陽生命品川ビル20F",
       "source_url": "https://www.n-aqua.jp/company/info.html",
-      "evidence": "本社 〒108-0075 東京都港区港南2-16-2 太陽生命品川ビル20F",
-      "verified": true
+      "evidence": "本社: 〒108-0075 東京都港区港南2-16-2 太陽生命品川ビル20F",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "東京都港区港南2-16-2 太陽生命品川ビル20F",
+      "rule_value": "東京都港区港南2-16-2 太陽生命品川ビル20F"
     },
     "representative": {
       "value": "中村 文隆",
       "source_url": "https://www.n-aqua.jp/company/info.html",
-      "evidence": "代表取締役 中村 文隆",
-      "verified": true
+      "evidence": "代表取締役: 中村 文隆",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "中村 文隆",
+      "rule_value": "中村 文隆"
     },
     "capital": {
       "value": "19億3百万円",
       "source_url": "https://www.n-aqua.jp/company/info.html",
-      "evidence": "資本金 19億3百万円(2025年12月31日現在)",
-      "verified": true
+      "evidence": "資本金: 19億3百万円(2025年12月31日現在)",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "19億3百万円",
+      "rule_value": "19億3百万円"
     },
     "established": {
       "value": "2004年11月",
       "source_url": "https://www.n-aqua.jp/company/info.html",
-      "evidence": "設立年月日 2004年11月29日",
-      "verified": true
+      "evidence": "設立年月日: 2004年11月29日",
+      "verified": true,
+      "method": "llm",
+      "llm_value": "2004年11月",
+      "rule_value": "2004年11月"
     },
     "missing_fields": [],
     "unverified_fields": [],
-    "extracted_at": "2026-10-17T06:38:51+00:00"
+    "extracted_at": "2026-10-17T07:38:59+00:00"
   }
 ]

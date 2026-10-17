@@ -1,0 +1,65 @@
+model: gemini-2.5-flash
+usage: prompt_tokens=602 output_tokens=324
+
+===== SYSTEM =====
+あなたは日本企業の公式サイトから企業情報を抽出するアシスタントです。
+与えられたページ抜粋（URL付き）だけを根拠に、次の4項目を抽出してください。
+
+- head_office_address: 本社（本店）所在地。郵便番号・電話番号・地図やアクセス案内の文言は除き、住所のみ（ビル名・階は含める）。
+- representative: 代表者の氏名のみ（役職は含めない）。代表取締役が複数いる場合は社長を優先し、他の代表者は notes に記載。
+- capital: 資本金。ページの表記どおり（例: 30,685百万円）。「(2026年3月31日現在)」等の注記は除く。
+- established: 設立年月を「YYYY年M月」形式で（和暦は西暦に換算）。会社概要に年しか無い場合は沿革の該当年の「設立」の記載から月を取る。月の根拠が無ければ「YYYY年」とし、推測で補わない。
+
+ルール:
+- 抜粋に根拠が無い項目は value / source_url / evidence をすべて空文字にする。一般知識による補完は禁止。
+- evidence には根拠となる抜粋の行を原文のまま（改変・要約せず）コピーする。複数行にまたがる場合は改行で区切る。
+- source_url は evidence を含むページの URL をそのまま記載する。
+- 「設立」と「創業」「創立」が両方ある場合は「設立」を採用する。
+
+===== USER =====
+企業名: ユキグニファクトリー
+
+### URL: https://www.yukiguni-factory.co.jp/company/gaiyou/
+代表者名: 代表取締役社長 湯澤 尚史
+本社所在地: 新潟本社 〒949-6695 新潟県南魚沼市余川89番地 TEL:025-778-0111(代表)
+設立年月: 1983年7月
+資本金: 100百万円
+拠点一覧
+社長メッセージ
+コーポレート・アイデンティティ
+コーポレート アイデンティティ
+YUKIGUNI FACTORY CO., LTD.
+〒949-6695 新潟県南魚沼市余川89番地 TEL:025-778-0111(代表)
+東京本社
+〒104-0031 東京都中央区京橋2丁目8番8号 新京橋ビル4階 TEL:03-4363-2483
+茸事業、その他食品事業
+事業所
+新潟、東京
+会社概要
+IR情報 >
+中期経営計画
+
+===== RESPONSE =====
+{
+  "head_office_address": {
+    "value": "新潟県南魚沼市余川89番地",
+    "source_url": "https://www.yukiguni-factory.co.jp/company/gaiyou/",
+    "evidence": "本社所在地: 新潟本社 〒949-6695 新潟県南魚沼市余川89番地 TEL:025-778-0111(代表)"
+  },
+  "representative": {
+    "value": "湯澤 尚史",
+    "source_url": "https://www.yukiguni-factory.co.jp/company/gaiyou/",
+    "evidence": "代表者名: 代表取締役社長 湯澤 尚史"
+  },
+  "capital": {
+    "value": "100百万円",
+    "source_url": "https://www.yukiguni-factory.co.jp/company/gaiyou/",
+    "evidence": "資本金: 100百万円"
+  },
+  "established": {
+    "value": "1983年7月",
+    "source_url": "https://www.yukiguni-factory.co.jp/company/gaiyou/",
+    "evidence": "設立年月: 1983年7月"
+  },
+  "notes": ""
+}
