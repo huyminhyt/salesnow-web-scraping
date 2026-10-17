@@ -95,3 +95,69 @@ def test_scope_allows_subdomains_only_of_same_site():
 def test_link_scoring_prefers_profile_over_ir():
     assert score_link("会社概要", "https://x.jp/company/profile/") > score_link("IR情報", "https://x.jp/ir/")
     assert score_link("ニュース", "https://x.jp/news/") <= 0
+
+
+# --- LLM step (no network: a fake Gemini client stands in for the API) ---
+
+import json  # noqa: E402
+from types import SimpleNamespace  # noqa: E402
+
+import pytest  # noqa: E402
+
+from content import relevant_excerpt  # noqa: E402
+from extractor import FieldResult, merge  # noqa: E402
+from llm_extractor import GeminiExtractor  # noqa: E402
+
+
+def _fake_llm(text, tmp_path, monkeypatch):
+    import llm_extractor
+
+    monkeypatch.setattr(llm_extractor, "LOG_DIR", tmp_path)
+    llm = GeminiExtractor.__new__(GeminiExtractor)
+    llm.model = "fake"
+    usage = SimpleNamespace(prompt_token_count=1, candidates_token_count=1)
+    llm.client = SimpleNamespace(models=SimpleNamespace(
+        generate_content=lambda **_: SimpleNamespace(text=text, usage_metadata=usage)))
+    return llm
+
+
+def _llm_json(**overrides):
+    base = {f: {"value": "", "source_url": "", "evidence": ""} for f in ("head_office_address", "representative", "capital", "established")}
+    base.update(overrides)
+    return {**base, "notes": ""}
+
+
+def test_llm_output_is_parsed_and_logged(tmp_path, monkeypatch):
+    payload = _llm_json(capital={"value": "55億円", "source_url": "u", "evidence": "資本金: 55億円"})
+    llm = _fake_llm(json.dumps(payload, ensure_ascii=False), tmp_path, monkeypatch)
+    assert llm.extract("テスト", [("u", "資本金: 55億円")])["capital"]["value"] == "55億円"
+    log = (tmp_path / "テスト.txt").read_text(encoding="utf-8")
+    assert "===== USER =====" in log and "資本金: 55億円" in log
+
+
+@pytest.mark.parametrize("bad", ["not json", json.dumps({"notes": ""})])
+def test_invalid_llm_output_raises(bad, tmp_path, monkeypatch):
+    with pytest.raises(ValueError):
+        _fake_llm(bad, tmp_path, monkeypatch).extract("テスト", [("u", "x")])
+
+
+def test_merge_rejects_unsupported_llm_value_in_favour_of_verified_rule():
+    page = {"u": "資本金\n70億円"}
+    rules = {f: FieldResult() for f in ("head_office_address", "representative", "capital", "established")}
+    rules["capital"] = FieldResult("70億円", "u", "資本金 70億円", verified=True)
+    hallucinated = _llm_json(capital={"value": "80億円", "source_url": "u", "evidence": "資本金: 80億円"})
+    merged = merge(hallucinated, rules, page)
+    assert merged["capital"].value == "70億円" and merged["capital"].method == "rule_based"
+    assert merged["capital"].llm_value == "80億円"
+
+
+def test_verify_accepts_nonadjacent_quoted_lines_but_not_for_established():
+    page = "本社\n東京都港区1-1\n電話\n03\n設立\n1964年\n沿革\n7月\n設立"
+    assert verify("head_office_address", "東京都港区1-1", "本社: 東京都港区1-1\n東京都港区1-1", page)
+    assert not verify("established", "1964年7月", "1964年\n7月", page)
+
+
+def test_excerpt_keeps_labels_and_drops_navigation():
+    soup = parse_html("<nav><a>ニュース</a><a>採用</a></nav>" + PROFILE.split("<body>")[1])
+    excerpt = relevant_excerpt(soup)
+    assert "資本金: 43億1,014万円" in excerpt and "ニュース" not in excerpt
