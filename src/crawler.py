@@ -10,18 +10,20 @@ from urllib.parse import urldefrag, urljoin, urlparse
 
 import requests
 
-from content import FIELD_LABELS, label_value_pairs, parse_html
+from content import FIELD_LABELS, founding_month, label_value_pairs, page_text, parse_html, years_in
 
 log = logging.getLogger(__name__)
 
 USER_AGENT = "Mozilla/5.0 (compatible; SalesNowScrapingTest/1.0; +https://github.com/)"
-SKIP_EXT = re.compile(r"\.(pdf|jpe?g|png|gif|svg|zip|xlsx?|docx?|pptx?|mp4|mp3|css|js)$", re.I)
+HISTORY = re.compile(r"沿革|歴史|あゆみ|history|enkaku|rekishi|ayumi", re.I)
+MONTH = re.compile(r"\d{1,2}\s*月|\d{4}[./]\d{1,2}|(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)", re.I)
+SKIP_EXT =re.compile(r"\.(pdf|jpe?g|png|gif|svg|zip|xlsx?|docx?|pptx?|mp4|mp3|css|js)$", re.I)
 
 # (pattern, weight) matched against anchor text + URL path.
 LINK_SCORES = [
     (r"会社概要|企業概要|会社案内|会社データ|基本情報|company\s*(profile|overview|outline|data)|corporate\s*(profile|data)|gaiyou|gaiyo|outline|profile|/info", 10),
     (r"企業情報|会社情報|について|about|corporate|company", 4),
-    (r"沿革|history|enkaku", 2),
+    (r"沿革|歴史|history|enkaku|rekishi", 2),
     (r"/ir/|\bIR\b|news|recruit|saiyo|採用|product|商品|csr|sustainab|contact|privacy|sitemap|faq|gallery|movie|recipe", -6),
 ]
 
@@ -97,10 +99,14 @@ class Crawler:
         queue = [(0, 0, start_url)]  # (-score, seq, url)
         seen = {start_url}
         covered: set[str] = set()
+        founding_year = None  # set when the profile lacks the month -> 沿革 pages only
+        history_urls: set[str] = set()
         seq = 0
 
         while queue and len(result.visited) < self.max_pages:
             _, _, url = heapq.heappop(queue)
+            if founding_year and url not in history_urls:
+                continue
             if not self.allowed(url):
                 result.errors.append(f"robots.txt disallows {url}")
                 continue
@@ -113,6 +119,9 @@ class Crawler:
                 time.sleep(self.delay)
 
             final_url = urldefrag(resp.url)[0]
+            if final_url in result.visited:  # two links redirecting to the same page
+                continue
+            seen.add(final_url)
             result.visited.append(final_url)
             if "html" not in resp.headers.get("Content-Type", "html"):
                 continue
@@ -122,10 +131,17 @@ class Crawler:
 
             soup = parse_html(resp.content)
             result.pages.append(Page(final_url, resp.content))
-            keys = [k for k, _ in label_value_pairs(soup)]
-            covered |= {f for f, p in FIELD_LABELS.items() if any(re.search(p, k, re.I) for k in keys)}
-            if len(covered) == len(FIELD_LABELS):
-                break
+            pairs = label_value_pairs(soup)
+            covered |= {f for f, p in FIELD_LABELS.items() if any(re.search(p, k, re.I) for k, _ in pairs)}
+            if founding_year:
+                if founding_month(page_text(soup), founding_year):
+                    break
+            elif len(covered) == len(FIELD_LABELS):
+                # Profiles often give only the year (e.g. 昭和18年); the month is then on the 沿革 page.
+                founded = " ".join(v for k, v in pairs if re.search(FIELD_LABELS["established"], k, re.I))
+                if MONTH.search(founded) or not years_in(founded):
+                    break
+                founding_year = min(years_in(founded))
 
             for a in soup.find_all("a", href=True):
                 link = urldefrag(urljoin(final_url, a["href"]))[0]
@@ -136,6 +152,8 @@ class Crawler:
                 score = score_link(a.get_text(" ", strip=True), link)
                 if score > 0:
                     seen.add(link)
+                    if HISTORY.search(f"{a.get_text()} {link}"):
+                        history_urls.add(link)
                     seq += 1
                     heapq.heappush(queue, (-score, seq, link))
 

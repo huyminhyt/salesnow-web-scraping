@@ -1,5 +1,5 @@
-"""HTML -> plain text, plus label/value pairs from the tables and <dl> lists that
-Japanese 会社概要 pages almost always use."""
+"""HTML -> plain text, label/value pairs (tables, <dl>, label-per-line layouts) and
+the 沿革 timeline parser used to recover the founding month."""
 import re
 import unicodedata
 
@@ -44,27 +44,45 @@ def label_value_pairs(soup: BeautifulSoup) -> list[tuple[str, str]]:
     return [(normalize(k), normalize(v)) for k, v in pairs if k.strip() and v.strip() and len(k) <= 40]
 
 
-def page_text(soup: BeautifulSoup) -> str:
-    main = soup.find("main") or soup.body or soup
-    lines = (normalize(line) for line in main.get_text("\n").splitlines())
-    return "\n".join(line for line in lines if line)
-
-
-def relevant_excerpt(soup: BeautifulSoup, max_chars: int = 5000) -> str:
-    """Keep only what the LLM needs: label/value pairs, then text lines that mention
-    a target label (with one line of context). Keeps prompts small on long pages."""
-    pairs = [f"{k}: {v}" for k, v in label_value_pairs(soup) if _ANY_LABEL.search(k)]
+def text_pairs(soup: BeautifulSoup) -> list[tuple[str, str]]:
+    """Fallback for profiles laid out with divs instead of tables: a short line that is
+    exactly a known label, followed by its value on the next line."""
     lines = page_text(soup).splitlines()
-    picked = []
-    for i, line in enumerate(lines):
-        if _ANY_LABEL.search(line) and len(line) < 300:
-            picked.extend(lines[i : i + 2])
-    seen, out = set(), []
-    for line in pairs + picked:
-        if line not in seen:
-            seen.add(line)
-            out.append(line)
-    return "\n".join(out)[:max_chars]
+    return [(lines[i], lines[i + 1]) for i in range(len(lines) - 1)
+            if len(lines[i]) <= 8 and _ANY_LABEL.fullmatch(lines[i].strip())]
+
+
+_ERAS = {"明治": 1867, "大正": 1911, "昭和": 1925, "平成": 1988, "令和": 2018}
+
+
+def years_in(text: str) -> set[int]:
+    """Western years mentioned in text, with wareki (昭和39年 etc.) converted."""
+    years = {int(y) for y in re.findall(r"(?<!\d)(1[89]\d\d|20\d\d)(?!\d)", text)}
+    for era, offset in _ERAS.items():
+        years |= {offset + (1 if n == "元" else int(n)) for n in re.findall(rf"{era}\s*(\d+|元)\s*年", text)}
+    return years
+
+
+def founding_month(text: str, year: int) -> tuple[int, str] | None:
+    """Scan a 沿革 timeline for the first 設立 entry in `year` and return (month, evidence).
+    Timelines put 'YYYY年' / 'M月' on their own lines before the event, so we carry the
+    most recent year/month forward line by line."""
+    cur_year, month, ctx = None, None, []
+    for line in text.splitlines():
+        found = years_in(line)
+        if found and re.fullmatch(r"[\d年月日\s.()/明治大正昭和平成令和元]+", line):
+            cur_year, month, ctx = min(found), None, [line]
+        m = re.search(r"(?<!\d)(\d{1,2})\s*月", line)
+        if m and cur_year and len(line) <= 12:
+            month, ctx = int(m.group(1)), ctx + [line] if line not in ctx else ctx
+        if "設立" in line and cur_year == year and month:
+            return month, " ".join(ctx + [line])
+    return None
+
+
+def page_text(soup: BeautifulSoup) -> str:
+    lines = (normalize(line) for line in soup.get_text("\n").splitlines())
+    return "\n".join(line for line in lines if line)
 
 
 def field_hits(soup: BeautifulSoup) -> int:
